@@ -2,7 +2,7 @@ import Footer from "@/components/shared/Footer/Footer";
 import Header from "@/components/shared/Header/Header";
 
 
-export default function RootLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

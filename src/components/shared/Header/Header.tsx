@@ -9,8 +9,19 @@ import {
   FaRss,
   FaYoutube,
 } from "react-icons/fa";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X, Search, LogOut } from "lucide-react";
 import Logo from "../logo/Logo";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { logout } from "@/services/AuthService";
+import { useUser } from "@/context/UserContext";
 
 const categories = [
   "Home",
@@ -29,6 +40,7 @@ const categories = [
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
+  const { user, setIsLoading } = useUser();
   useEffect(() => {
     const date = new Date();
     const options: Intl.DateTimeFormatOptions = {
@@ -41,6 +53,11 @@ export default function Header() {
     setCurrentDate(formatted);
   }, []);
 
+  const handleLogOut = () => {
+    logout();
+    setIsLoading(true);
+  };
+
   return (
     <header className="w-full">
       {/* Topbar */}
@@ -51,13 +68,38 @@ export default function Header() {
             <span>📅 {currentDate}</span>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
-            <Link href="#" className="hover:underline">
-              Login
-            </Link>
-            {"|"}
-            <Link href="#" className="hover:underline">
-              Register
-            </Link>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>User</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem>My Report</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="cursor-pointer" onClick={handleLogOut}>
+                    <LogOut />
+                    <span>Log Out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link href="/login" className="hover:underline">
+                  Login
+                </Link>
+                {"|"}
+                <Link href="/register" className="hover:underline">
+                  Register
+                </Link>
+              </>
+            )}
             <div className="flex gap-2 text-white text-lg">
               <Link href="https://www.facebook.com/">
                 <FaFacebookF />
