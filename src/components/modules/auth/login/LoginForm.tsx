@@ -18,9 +18,13 @@ import { loginUser, reCaptchaVerification } from "@/services/AuthService";
 import { toast } from "sonner";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 const LoginForm = () => {
+  const { setUser } = useUser();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirectPath");
   const router = useRouter();
   const form = useForm({ resolver: zodResolver(loginSchema) });
   const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
@@ -42,6 +46,12 @@ const LoginForm = () => {
       const res = await loginUser(data);
       if (res?.success) {
         toast.success(res?.message);
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/profile");
+        }
+        setUser(res.data);
         reset(); // reset form fields
         router.push("/"); // navigate to home page
       } else {

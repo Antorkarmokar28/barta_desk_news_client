@@ -22,6 +22,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { logout } from "@/services/AuthService";
 import { useUser } from "@/context/UserContext";
+import { usePathname, useRouter } from "next/navigation";
+import { protectedRoutes } from "@/constants";
 
 const categories = [
   "Home",
@@ -41,6 +43,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
   const { user, setIsLoading } = useUser();
+  const pathname = usePathname();
+  const router = useRouter();
   useEffect(() => {
     const date = new Date();
     const options: Intl.DateTimeFormatOptions = {
@@ -56,6 +60,9 @@ export default function Header() {
   const handleLogOut = () => {
     logout();
     setIsLoading(true);
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
   };
 
   return (
@@ -80,10 +87,14 @@ export default function Header() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                  <DropdownMenuItem>My Report</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/admin/dashboard">Dashboard</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer" onClick={handleLogOut}>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={handleLogOut}
+                  >
                     <LogOut />
                     <span>Log Out</span>
                   </DropdownMenuItem>
