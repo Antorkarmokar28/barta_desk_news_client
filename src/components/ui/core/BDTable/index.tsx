@@ -36,7 +36,10 @@ export function BDTable<TData, TValue>({
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow
+              key={headerGroup.id}
+              className="bg-gray-300 hover:bg-gray-200 font-bold"
+            >
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>
@@ -56,6 +59,7 @@ export function BDTable<TData, TValue>({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
+                className="text-gray-600 font-bold"
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
@@ -67,7 +71,7 @@ export function BDTable<TData, TValue>({
               </TableRow>
             ))
           ) : (
-            <TableRow>
+            <TableRow className="text-gray-600 font-bold">
               <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.
               </TableCell>

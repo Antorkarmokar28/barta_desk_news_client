@@ -36,12 +36,12 @@ const data = {
     },
     {
       title: "News",
-      url: "/admin/news/all-news",
+      url: "#", ///admin/news/all-news
       icon: Bot,
       items: [
         {
           title: "Manage News",
-          url: "/admin/news/all-news",
+          url: "/admin/news/newses",
         },
         {
           title: "Manage Categories",
@@ -99,7 +99,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
