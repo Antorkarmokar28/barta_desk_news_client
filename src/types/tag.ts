@@ -1,0 +1,6 @@
+export interface ITag {
+  _id: string;
+  name: string;
+  slug: string;
+  children: ITag[];
+}

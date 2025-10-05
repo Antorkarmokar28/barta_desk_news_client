@@ -72,7 +72,7 @@ export default function Header() {
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3 flex-wrap">
             <span>Bangladesh</span>
-            <span>📅 {currentDate}</span>
+            <span>{currentDate}</span>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
             {user ? (

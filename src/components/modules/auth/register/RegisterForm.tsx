@@ -22,7 +22,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
-  const router = useRouter(); // ⬅️ added
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(registerSchema),

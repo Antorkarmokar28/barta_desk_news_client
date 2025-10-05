@@ -1,2 +1,3 @@
 export * from "./user";
-export * from "./category"
+export * from "./category";
+export * from "./tag";

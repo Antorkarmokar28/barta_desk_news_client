@@ -48,6 +48,10 @@ const data = {
           url: "/admin/news/category",
         },
         {
+          title: "Manage Tags",
+          url: "/admin/news/tag",
+        },
+        {
           title: "Manage comments",
           url: "/admin/news/comments",
         },
